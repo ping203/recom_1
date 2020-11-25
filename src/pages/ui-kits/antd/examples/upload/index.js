@@ -23,6 +23,7 @@ const props = {
   },
 }
 
+
 class AntdUploadExample extends React.Component {
   render() {
     return (

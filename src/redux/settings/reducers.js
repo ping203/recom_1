@@ -20,7 +20,7 @@ const initialState = {
     isMobileView: false,
     isMobileMenuOpen: false,
     isMenuCollapsed: false,
-    menuLayoutType: 'left', // left, top, nomenu
+    menuLayoutType: 'top', // left, top, nomenu
     routerAnimation: 'slide-fadein-up', // none, slide-fadein-up, slide-fadein-right, fadein, zoom-fadein
     menuColor: 'white', // white, dark, gray
     theme: 'default', // default, dark

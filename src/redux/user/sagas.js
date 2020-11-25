@@ -79,6 +79,37 @@ export function* REGISTER({ payload }) {
     })
   }
 }
+export function* SELLER_ADDING({ payload }) {
+  console.log('payload')
+  const { email, password, name } = payload
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const { authProvider } = yield select(state => state.settings)
+  const success = yield call(mapAuthProviders[authProvider].register, email, password, name)
+  if (success) {
+    yield put({
+      type: 'user/LOAD_CURRENT_ACCOUNT',
+    })
+    yield history.push('/seller/alpha')
+    notification.success({
+      message: 'Succesful Registered',
+      description: 'You have successfully registered!',
+    })
+  }
+  if (!success) {
+    yield put({
+      type: 'user/SET_STATE',
+      payload: {
+        loading: false,
+      },
+    })
+  }
+}
+
 
 export function* LOAD_CURRENT_ACCOUNT() {
   yield put({
@@ -132,6 +163,7 @@ export default function* rootSaga() {
   yield all([
     takeEvery(actions.LOGIN, LOGIN),
     takeEvery(actions.REGISTER, REGISTER),
+    takeEvery(actions.SELLER_ADDING, SELLER_ADDING),
     takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     takeEvery(actions.LOGOUT, LOGOUT),
     LOAD_CURRENT_ACCOUNT(), // run once on app load to check user auth
